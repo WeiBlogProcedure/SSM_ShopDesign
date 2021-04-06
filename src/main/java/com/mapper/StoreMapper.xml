@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.mapper.StoreMapper">
+		<resultMap type="Store" id="storeResult">
+			<id property="id" column="id"/>
+			<result property="name" column="name"/>
+			<result property="address" column="address"/>
+			<result property="telephone" column="telephone"/>
+			<result property="tname" column="tname"/>
+		</resultMap>
+		<insert id="insert" parameterType="Store">
+			insert into store
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null">name,</if>
+			<if test="address != null">address,</if>
+			<if test="telephone != null">telephone,</if>
+			<if test="tname != null">tname,</if>
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null">#{name},</if>
+			<if test="address != null">#{address},</if>
+			<if test="telephone != null">#{telephone},</if>
+			<if test="tname != null">#{tname},</if>
+			</trim>
+		</insert>
+		<update id="update" parameterType="Store">
+			update store
+			<trim prefix="set" suffixOverrides=",">
+			<if test="name != null">name=#{name},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="telephone != null">telephone=#{telephone},</if>
+			<if test="tname != null">tname=#{tname},</if>
+		</trim>
+			where id=#{id}
+		</update>
+		<delete id="delete" parameterType="Store">
+			delete from store where id= #{id}
+		</delete>
+		<select id="list" resultType="Store" resultMap="storeResult">
+			select * from  store where 1=1 ${where} order by id desc
+			</select>
+		<select id="sealist" resultType="Store" resultMap="storeResult">
+			select * from  store where 1=1 ${where}
+			</select>
+		<select id="get" parameterType="_int" resultType="Store">
+			select * from  store  where id= #{id}
+		</select>
+			<select id="total" resultType="int">
+	        select count(*) from store
+	    </select>
+<update id="updatesql"  parameterType="String">
+${value}
+</update>
+<delete id="deletesql"  parameterType="String">
+${value}  
+</delete>
+	</mapper>
